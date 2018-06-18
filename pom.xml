@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformats-text</artifactId>
+        <version>2.9.6</version>
+    </parent>
+    <artifactId>jackson-dataformat-xlsx</artifactId>
+    <name>Jackson-dataformat-XLSX</name>
+    <packaging>bundle</packaging>
+    <description>Support for writing XLSX-encoded data via Jackson
+        abstractions.
+    </description>
+    <url>https://github.com/FasterXML/jackson-dataformats-text</url>
+
+    <properties>
+        <!-- Generate PackageVersion.java into this directory. -->
+        <packageVersion.dir>com/fasterxml/jackson/dataformat/xlsx</packageVersion.dir>
+        <packageVersion.package>${project.groupId}.xlsx</packageVersion.package>
+        <osgi.private>com.fasterxml.jackson.dataformat.xlsx.impl</osgi.private>
+        <!-- default OSGi import ought to work -->
+        <jackson.version>2.9.6</jackson.version>
+        <jackson.version.minor>2.9.1</jackson.version.minor>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency> <!-- all components use junit for testing -->
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- we do not 100% need dep here because it is transitive dependency
+            through databind: however, since it is needed anyway let's force
+            suitable version by adding direct dep
+          -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version.minor}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-csv</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.10.1</version>
+        </dependency>
+
+        <!-- and for testing -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Inherited from oss-base. Generate PackageVersion.java.-->
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <executions>
+                    <execution>
+                        <id>process-packageVersion</id>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
