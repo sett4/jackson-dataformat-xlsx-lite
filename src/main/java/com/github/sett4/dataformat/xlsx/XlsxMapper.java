@@ -1,4 +1,4 @@
-package com.fasterxml.jackson.dataformat.xlsx;
+package com.github.sett4.dataformat.xlsx;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;

@@ -7,8 +7,10 @@
         <artifactId>jackson-dataformats-text</artifactId>
         <version>2.9.6</version>
     </parent>
-    <artifactId>jackson-dataformat-xlsx</artifactId>
-    <name>Jackson-dataformat-XLSX</name>
+    <groupId>com.github.sett4</groupId>
+    <artifactId>jackson-dataformat-xlsx-lite</artifactId>
+    <version>0.1.0</version>
+    <name>Jackson-dataformat-XLSX-lite</name>
     <packaging>bundle</packaging>
     <description>Support for writing XLSX-encoded data via Jackson
         abstractions.
@@ -17,9 +19,9 @@
 
     <properties>
         <!-- Generate PackageVersion.java into this directory. -->
-        <packageVersion.dir>com/fasterxml/jackson/dataformat/xlsx</packageVersion.dir>
+        <packageVersion.dir>com/github/sett4/dataformat/xlsx</packageVersion.dir>
         <packageVersion.package>${project.groupId}.xlsx</packageVersion.package>
-        <osgi.private>com.fasterxml.jackson.dataformat.xlsx.impl</osgi.private>
+        <osgi.private>com.github.sett4.dataformat.xlsx.impl</osgi.private>
         <!-- default OSGi import ought to work -->
         <jackson.version>2.9.6</jackson.version>
         <jackson.version.minor>2.9.1</jackson.version.minor>

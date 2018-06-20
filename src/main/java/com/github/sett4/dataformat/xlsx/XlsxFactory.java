@@ -1,4 +1,4 @@
-package com.fasterxml.jackson.dataformat.xlsx;
+package com.github.sett4.dataformat.xlsx;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.io.IOContext;
@@ -104,7 +104,7 @@ public class XlsxFactory
 
     @Override
     public Version version() {
-        return PackageVersion.VERSION;
+        return com.github.sett4.xlsx.PackageVersion.VERSION;
     }
 
     // Yes; CSV is positional

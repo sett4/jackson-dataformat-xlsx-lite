@@ -1,11 +1,11 @@
-package com.fasterxml.jackson.dataformat.xlsx.serialize;
+package com.github.sett4.dataformat.xlsx.serialize;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.fasterxml.jackson.dataformat.xlsx.ModuleTestBase;
-import com.fasterxml.jackson.dataformat.xlsx.XlsxMapper;
+import com.github.sett4.dataformat.xlsx.ModuleTestBase;
+import com.github.sett4.dataformat.xlsx.XlsxMapper;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

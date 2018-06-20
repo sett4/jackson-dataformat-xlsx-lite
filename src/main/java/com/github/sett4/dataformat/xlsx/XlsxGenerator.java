@@ -1,4 +1,4 @@
-package com.fasterxml.jackson.dataformat.xlsx;
+package com.github.sett4.dataformat.xlsx;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.base.GeneratorBase;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.io.IOContext;
 import com.fasterxml.jackson.core.json.JsonWriteContext;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.dataformat.csv.PackageVersion;
-import com.fasterxml.jackson.dataformat.xlsx.impl.XlsxWriter;
+import com.github.sett4.dataformat.xlsx.impl.XlsxWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;

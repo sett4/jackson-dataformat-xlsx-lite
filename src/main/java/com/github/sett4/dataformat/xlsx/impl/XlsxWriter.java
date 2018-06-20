@@ -1,4 +1,4 @@
-package com.fasterxml.jackson.dataformat.xlsx.impl;
+package com.github.sett4.dataformat.xlsx.impl;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
