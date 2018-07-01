@@ -6,6 +6,24 @@ This project uses a lot of copy from jackson-dataformat-csv.
 
 # Usage
 
+```xml
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+```
+
+```xml
+	<dependency>
+	    <groupId>com.github.sett4</groupId>
+	    <artifactId>jackson-dataformat-xlsx-lite</artifactId>
+	    <version>2.9.6-1</version>
+	</dependency>
+```
+
+
 ```java
 package com.github.sett4.dataformat.xlsx.serialize;
 
