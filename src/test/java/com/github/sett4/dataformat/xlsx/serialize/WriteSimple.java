@@ -1,10 +1,13 @@
 package com.github.sett4.dataformat.xlsx.serialize;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.github.sett4.dataformat.xlsx.ModuleTestBase;
+import com.github.sett4.dataformat.xlsx.XlsxGenerator;
 import com.github.sett4.dataformat.xlsx.XlsxMapper;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -31,6 +34,7 @@ public class WriteSimple extends ModuleTestBase {
         System.out.println(file);
 
         XlsxMapper mapper = new XlsxMapper();
+        mapper.enable(XlsxGenerator.Feature.WRITE_NUMBERS_AS_STRINGS);
         CsvSchema schema = mapper.schemaFor(FiveMinuteUser.class).withHeader();
         SequenceWriter sequenceWriter = mapper.writer(schema).writeValues(file);
         sequenceWriter.write(user);

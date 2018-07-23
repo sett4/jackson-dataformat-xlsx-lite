@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import com.fasterxml.jackson.databind.util.LRUMap;
 import com.fasterxml.jackson.databind.util.NameTransformer;
-import com.fasterxml.jackson.dataformat.csv.CsvFactory;
-import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import java.util.Collection;
@@ -81,27 +79,13 @@ public class XlsxMapper extends ObjectMapper {
         return state ? enable(f) : disable(f);
     }
 
-    public XlsxMapper configure(CsvParser.Feature f, boolean state) {
-        return state ? enable(f) : disable(f);
-    }
-
     public XlsxMapper enable(XlsxGenerator.Feature f) {
-        ((CsvFactory) _jsonFactory).enable(f);
-        return this;
-    }
-
-    public XlsxMapper enable(CsvParser.Feature f) {
-        ((CsvFactory) _jsonFactory).enable(f);
+        _jsonFactory.enable(f);
         return this;
     }
 
     public XlsxMapper disable(XlsxGenerator.Feature f) {
-        ((CsvFactory) _jsonFactory).disable(f);
-        return this;
-    }
-
-    public XlsxMapper disable(CsvParser.Feature f) {
-        ((CsvFactory) _jsonFactory).disable(f);
+        _jsonFactory.disable(f);
         return this;
     }
 
@@ -113,11 +97,11 @@ public class XlsxMapper extends ObjectMapper {
 
     /**
      * Overridden with more specific type, since factory we have
-     * is always of type {@link CsvFactory}
+     * is always of type {@link XlsxFactory}
      */
     @Override
-    public CsvFactory getFactory() {
-        return (CsvFactory) _jsonFactory;
+    public XlsxFactory getFactory() {
+        return (XlsxFactory) _jsonFactory;
     }
 
     /*
