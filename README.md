@@ -1,5 +1,7 @@
 # jackson-dataformat-xlsx-lite
 
+[![CircleCI](https://circleci.com/gh/sett4/jackson-dataformat-xlsx-lite.svg?style=svg)](https://circleci.com/gh/sett4/jackson-dataformat-xlsx-lite)
+
 Generates Xlsx files with Jackson
 
 This project uses a lot of copy from jackson-dataformat-csv.
