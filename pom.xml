@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.fasterxml.jackson.dataformat</groupId>
         <artifactId>jackson-dataformats-text</artifactId>
-        <version>2.9.6</version>
+        <version>2.9.9</version>
     </parent>
     <groupId>com.github.sett4</groupId>
     <artifactId>jackson-dataformat-xlsx-lite</artifactId>
-    <version>0.1.0</version>
+    <version>2.9.9</version>
     <name>Jackson-dataformat-XLSX-lite</name>
     <packaging>bundle</packaging>
     <description>Support for writing XLSX-encoded data via Jackson
@@ -23,8 +23,8 @@
         <packageVersion.package>${project.groupId}.xlsx</packageVersion.package>
         <osgi.private>com.github.sett4.dataformat.xlsx.impl</osgi.private>
         <!-- default OSGi import ought to work -->
-        <jackson.version>2.9.6</jackson.version>
-        <jackson.version.minor>2.9.1</jackson.version.minor>
+        <jackson.version>2.9.9</jackson.version>
+        <jacksonDatabind.version>2.9.9.1</jacksonDatabind.version>
     </properties>
 
     <dependencies>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <version>${jacksonDatabind.version}</version>
         </dependency>
         <!-- we do not 100% need dep here because it is transitive dependency
             through databind: however, since it is needed anyway let's force
@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version.minor}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
