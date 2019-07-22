@@ -23,7 +23,7 @@
         <packageVersion.package>${project.groupId}.xlsx</packageVersion.package>
         <osgi.private>com.github.sett4.dataformat.xlsx.impl</osgi.private>
         <!-- default OSGi import ought to work -->
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.10.0.pr1</jackson.version>
         <jacksonDatabind.version>2.9.9.1</jacksonDatabind.version>
     </properties>
 
