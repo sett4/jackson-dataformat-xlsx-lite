@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-public class WriteSimple extends ModuleTestBase {
+public class WriteSimpleTest extends ModuleTestBase {
     private final ObjectMapper MAPPER = mapperForXlsx();
 
     public XlsxMapper mapperForXlsx() {
