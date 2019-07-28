@@ -21,7 +21,7 @@ This project uses a lot of copy from jackson-dataformat-csv.
 	<dependency>
 	    <groupId>com.github.sett4</groupId>
 	    <artifactId>jackson-dataformat-xlsx-lite</artifactId>
-	    <version>2.9.9</version>
+	    <version>2.9.9-1</version>
 	</dependency>
 ```
 
