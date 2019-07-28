@@ -1,23 +1,20 @@
 package com.github.sett4.dataformat.xlsx.serialize;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.github.sett4.dataformat.xlsx.ModuleTestBase;
 import com.github.sett4.dataformat.xlsx.XlsxGenerator;
 import com.github.sett4.dataformat.xlsx.XlsxMapper;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.math.BigDecimal;
 
 public class WriteSimpleTest extends ModuleTestBase {
     private final ObjectMapper MAPPER = mapperForXlsx();
@@ -29,7 +26,7 @@ public class WriteSimpleTest extends ModuleTestBase {
     @Test
     public void testSchema() throws Exception {
         FiveMinuteUser user = new FiveMinuteUser("Silu", "Seppala", false, Gender.MALE, 123,
-                new byte[]{1, 2, 3, 4, 5});
+                new byte[]{1, 2, 3, 4, 5}, BigDecimal.ZERO);
         File file = File.createTempFile("jackson-xlsx-test", ".xlsx");
         System.out.println(file);
 
@@ -58,6 +55,7 @@ public class WriteSimpleTest extends ModuleTestBase {
                 .addColumn("userImage")
                 .addColumn("verified")
                 .addColumn("i")
+                .addColumn("bigDecimal")
                 .setUseHeader(true)
                 .build();
 
@@ -65,7 +63,7 @@ public class WriteSimpleTest extends ModuleTestBase {
         // @JsonPropertyOrder({"firstName", "lastName", "gender" ,"verified", "userImage"})
 
         FiveMinuteUser user = new FiveMinuteUser("Silu", "Seppala", false, Gender.MALE, 123,
-                new byte[]{1, 2, 3, 4, 5});
+                new byte[]{1, 2, 3, 4, 5}, new BigDecimal("1234567890123456789012345678901234567890"));
         File file = File.createTempFile("jackson-xlsx-test", ".xlsx");
         System.out.println(file);
         OutputStream outputStream = new FileOutputStream(file);
@@ -81,6 +79,29 @@ public class WriteSimpleTest extends ModuleTestBase {
         assertEquals("userImage", sheet.getRow(0).getCell(3).getStringCellValue());
         assertEquals("verified", sheet.getRow(0).getCell(4).getStringCellValue());
         assertEquals("i", sheet.getRow(0).getCell(5).getStringCellValue());
+        assertEquals(new BigDecimal("1234567890123456789012345678901234567890").doubleValue(), sheet.getRow(1).getCell(6).getNumericCellValue());
+
+    }
+
+    @Test
+    public void testFeature_NumbersAsString() throws IOException {
+        XlsxMapper mapper = new XlsxMapper();
+        mapper.enable(XlsxGenerator.Feature.WRITE_NUMBERS_AS_STRINGS);
+        CsvSchema schema = mapper.schemaFor(FiveMinuteUser.class).withHeader();
+
+        FiveMinuteUser user = new FiveMinuteUser("Silu", "Seppala", false, Gender.MALE, 123,
+                new byte[]{1, 2, 3, 4, 5}, new BigDecimal("1234567890123456789012345678901234567890"));
+        File file = File.createTempFile("jackson-xlsx-test", ".xlsx");
+        OutputStream outputStream = new FileOutputStream(file);
+        mapper.writer(schema).writeValue(outputStream, user);
+
+        Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
+        int activeSheetIndex = workbook.getActiveSheetIndex();
+        Sheet sheet = workbook.getSheetAt(activeSheetIndex);
+        assertEquals("123", sheet.getRow(1).getCell(5).getStringCellValue());
+        assertEquals(Cell.CELL_TYPE_STRING, sheet.getRow(1).getCell(5).getCellType());
+        assertEquals("1234567890123456789012345678901234567890", sheet.getRow(1).getCell(6).getStringCellValue());
+        assertEquals(Cell.CELL_TYPE_STRING, sheet.getRow(1).getCell(6).getCellType());
     }
 
     /*
