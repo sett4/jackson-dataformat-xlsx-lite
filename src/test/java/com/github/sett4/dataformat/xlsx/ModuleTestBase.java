@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public abstract class ModuleTestBase extends junit.framework.TestCase {
@@ -29,7 +30,7 @@ public abstract class ModuleTestBase extends junit.framework.TestCase {
             fail("Expected token " + expToken + ", current token " + actToken);
         }
     }
-    
+
     /*
     /**********************************************************
     /* Helper methods; low-level
@@ -100,7 +101,7 @@ public abstract class ModuleTestBase extends junit.framework.TestCase {
     /**
      * Slightly modified sample class from Jackson tutorial ("JacksonInFiveMinutes")
      */
-    @JsonPropertyOrder({"firstName", "lastName", "gender", "verified", "userImage", "i"})
+    @JsonPropertyOrder({"firstName", "lastName", "gender", "verified", "userImage", "i", "bigDecimal"})
     protected static class FiveMinuteUser {
 
         public String firstName, lastName;
@@ -108,17 +109,19 @@ public abstract class ModuleTestBase extends junit.framework.TestCase {
         private boolean _isVerified;
         private byte[] _userImage;
         private int i;
+        private BigDecimal bigDecimal;
 
         public FiveMinuteUser() {
         }
 
-        public FiveMinuteUser(String first, String last, boolean verified, Gender g, int i, byte[] data) {
+        public FiveMinuteUser(String first, String last, boolean verified, Gender g, int i, byte[] data, BigDecimal bigDecimal) {
             firstName = first;
             lastName = last;
             _isVerified = verified;
             _gender = g;
             this.i = i;
             _userImage = data;
+            this.bigDecimal = bigDecimal;
         }
 
         public boolean isVerified() {
@@ -176,6 +179,14 @@ public abstract class ModuleTestBase extends junit.framework.TestCase {
         public int hashCode() {
             // not really good but whatever:
             return firstName.hashCode();
+        }
+
+        public BigDecimal getBigDecimal() {
+            return bigDecimal;
+        }
+
+        public void setBigDecimal(BigDecimal bigDecimal) {
+            this.bigDecimal = bigDecimal;
         }
     }
 

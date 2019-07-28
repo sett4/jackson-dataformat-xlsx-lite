@@ -477,7 +477,11 @@ public class XlsxGenerator extends GeneratorBase {
             if (!this._arraySeparator.isEmpty()) {
                 this._addToArray(String.valueOf(v));
             } else {
-                this._writer.write(this._columnIndex(), v);
+                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
+                    this._writer.write(this._columnIndex(), String.valueOf(v));
+                } else {
+                    this._writer.write(this._columnIndex(), v);
+                }
             }
         }
 
@@ -492,7 +496,11 @@ public class XlsxGenerator extends GeneratorBase {
                 if (!this._arraySeparator.isEmpty()) {
                     this._addToArray(String.valueOf(v));
                 } else {
-                    this._writer.write(this._columnIndex(), v);
+                    if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
+                        this._writer.write(this._columnIndex(), String.valueOf(v));
+                    } else {
+                        this._writer.write(this._columnIndex(), v);
+                    }
                 }
             }
 
@@ -508,7 +516,11 @@ public class XlsxGenerator extends GeneratorBase {
                 if (!this._arraySeparator.isEmpty()) {
                     this._addToArray(String.valueOf(v));
                 } else {
-                    this._writer.write(this._columnIndex(), v.toString());
+                    if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
+                        this._writer.write(this._columnIndex(), String.valueOf(v));
+                    } else {
+                        this._writer.write(this._columnIndex(), v.doubleValue());
+                    }
                 }
             }
 
@@ -521,7 +533,11 @@ public class XlsxGenerator extends GeneratorBase {
             if (!this._arraySeparator.isEmpty()) {
                 this._addToArray(String.valueOf(v));
             } else {
-                this._writer.write(this._columnIndex(), v);
+                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
+                    this._writer.write(this._columnIndex(), String.valueOf(v));
+                } else {
+                    this._writer.write(this._columnIndex(), v);
+                }
             }
         }
 
@@ -533,7 +549,11 @@ public class XlsxGenerator extends GeneratorBase {
             if (!this._arraySeparator.isEmpty()) {
                 this._addToArray(String.valueOf(v));
             } else {
-                this._writer.write(this._columnIndex(), v);
+                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
+                    this._writer.write(this._columnIndex(), String.valueOf(v));
+                } else {
+                    this._writer.write(this._columnIndex(), v);
+                }
             }
         }
 
@@ -545,11 +565,15 @@ public class XlsxGenerator extends GeneratorBase {
         } else {
             this._verifyValueWrite("write number");
             if (!this._skipValue) {
-                String str = this.isEnabled(com.fasterxml.jackson.core.JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN) ? v.toPlainString() : v.toString();
-                if (!this._arraySeparator.isEmpty()) {
-                    this._addToArray(String.valueOf(v));
+                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
+                    String str = this.isEnabled(com.fasterxml.jackson.core.JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN) ? v.toPlainString() : v.toString();
+                    if (!this._arraySeparator.isEmpty()) {
+                        this._addToArray(String.valueOf(v));
+                    } else {
+                        this._writer.write(this._columnIndex(), str);
+                    }
                 } else {
-                    this._writer.write(this._columnIndex(), str);
+                    this._writer.write(this._columnIndex(), v.doubleValue());
                 }
             }
 
