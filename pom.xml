@@ -9,9 +9,9 @@
     </parent>
     <groupId>com.github.sett4</groupId>
     <artifactId>jackson-dataformat-xlsx-lite</artifactId>
-    <version>2.9.9-1</version>
-    <name>Jackson-dataformat-XLSX-lite</name>
-    <packaging>bundle</packaging>
+    <version>2.9.9.2</version>
+    <name>Jackson-dataformat-xlsx-lite</name>
+    <packaging>jar</packaging>
     <description>Support for writing XLSX-encoded data via Jackson
         abstractions.
     </description>
@@ -24,7 +24,7 @@
         <osgi.private>com.github.sett4.dataformat.xlsx.impl</osgi.private>
         <!-- default OSGi import ought to work -->
         <jackson.version>2.9.9</jackson.version>
-        <jacksonDatabind.version>2.9.9.1</jacksonDatabind.version>
+        <jacksonDatabind.version>2.9.9.2</jacksonDatabind.version>
     </properties>
 
     <dependencies>
