@@ -6,6 +6,10 @@ Generates Xlsx files with Jackson
 
 This project uses a lot of copy from jackson-dataformat-csv.
 
+# Latest Version
+
+see https://jitpack.io/#sett4/jackson-dataformat-xlsx-lite
+
 # Usage
 
 ```xml
