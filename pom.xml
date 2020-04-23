@@ -24,7 +24,7 @@
         <osgi.private>com.github.sett4.dataformat.xlsx.impl</osgi.private>
         <!-- default OSGi import ought to work -->
         <jackson.version>2.9.9</jackson.version>
-        <jacksonDatabind.version>2.9.10.1</jacksonDatabind.version>
+        <jacksonDatabind.version>2.9.10.4</jacksonDatabind.version>
     </properties>
 
     <dependencies>
