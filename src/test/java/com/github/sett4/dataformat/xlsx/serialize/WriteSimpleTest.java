@@ -9,6 +9,7 @@ import com.github.sett4.dataformat.xlsx.ModuleTestBase;
 import com.github.sett4.dataformat.xlsx.XlsxGenerator;
 import com.github.sett4.dataformat.xlsx.XlsxMapper;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -102,7 +103,7 @@ public class WriteSimpleTest extends ModuleTestBase {
         assertEquals(123.0, sheet.getRow(1).getCell(5).getNumericCellValue());
         assertEquals(CellType.NUMERIC, sheet.getRow(1).getCell(5).getCellType());
         assertEquals("1234567890123456789012345678901234567890", sheet.getRow(1).getCell(6).getStringCellValue());
-        assertEquals(Cell.CELL_TYPE_STRING, sheet.getRow(1).getCell(6).getCellType());
+        assertEquals(CellType.STRING, sheet.getRow(1).getCell(6).getCellType());
     }
 
     /*
