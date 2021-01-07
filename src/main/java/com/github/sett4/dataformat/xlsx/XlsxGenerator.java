@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.base.GeneratorBase;
 import com.fasterxml.jackson.core.io.IOContext;
 import com.fasterxml.jackson.core.json.JsonWriteContext;
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.dataformat.csv.PackageVersion;
 import com.github.sett4.dataformat.xlsx.impl.XlsxWriter;
@@ -477,11 +478,7 @@ public class XlsxGenerator extends GeneratorBase {
             if (!this._arraySeparator.isEmpty()) {
                 this._addToArray(String.valueOf(v));
             } else {
-                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
-                    this._writer.write(this._columnIndex(), String.valueOf(v));
-                } else {
-                    this._writer.write(this._columnIndex(), v);
-                }
+                this._writer.write(this._columnIndex(), v);
             }
         }
 
@@ -496,11 +493,7 @@ public class XlsxGenerator extends GeneratorBase {
                 if (!this._arraySeparator.isEmpty()) {
                     this._addToArray(String.valueOf(v));
                 } else {
-                    if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
-                        this._writer.write(this._columnIndex(), String.valueOf(v));
-                    } else {
-                        this._writer.write(this._columnIndex(), v);
-                    }
+                    this._writer.write(this._columnIndex(), v);
                 }
             }
 
@@ -516,11 +509,7 @@ public class XlsxGenerator extends GeneratorBase {
                 if (!this._arraySeparator.isEmpty()) {
                     this._addToArray(String.valueOf(v));
                 } else {
-                    if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
-                        this._writer.write(this._columnIndex(), String.valueOf(v));
-                    } else {
-                        this._writer.write(this._columnIndex(), v.doubleValue());
-                    }
+                    this._writer.write(this._columnIndex(), v.doubleValue());
                 }
             }
 
@@ -533,11 +522,7 @@ public class XlsxGenerator extends GeneratorBase {
             if (!this._arraySeparator.isEmpty()) {
                 this._addToArray(String.valueOf(v));
             } else {
-                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
-                    this._writer.write(this._columnIndex(), String.valueOf(v));
-                } else {
-                    this._writer.write(this._columnIndex(), v);
-                }
+                this._writer.write(this._columnIndex(), v);
             }
         }
 
@@ -549,11 +534,7 @@ public class XlsxGenerator extends GeneratorBase {
             if (!this._arraySeparator.isEmpty()) {
                 this._addToArray(String.valueOf(v));
             } else {
-                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
-                    this._writer.write(this._columnIndex(), String.valueOf(v));
-                } else {
-                    this._writer.write(this._columnIndex(), v);
-                }
+                this._writer.write(this._columnIndex(), v);
             }
         }
 
@@ -565,8 +546,9 @@ public class XlsxGenerator extends GeneratorBase {
         } else {
             this._verifyValueWrite("write number");
             if (!this._skipValue) {
-                if (isEnabled(Feature.WRITE_NUMBERS_AS_STRINGS)) {
-                    String str = this.isEnabled(com.fasterxml.jackson.core.JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN) ? v.toPlainString() : v.toString();
+                if (isEnabled(StreamWriteFeature.WRITE_BIGDECIMAL_AS_PLAIN)) {
+                    String str = this.isEnabled(StreamWriteFeature.WRITE_BIGDECIMAL_AS_PLAIN)
+                            ? v.toPlainString() : v.toString();
                     if (!this._arraySeparator.isEmpty()) {
                         this._addToArray(String.valueOf(v));
                     } else {

@@ -1,6 +1,7 @@
 package com.github.sett4.dataformat.xlsx.serialize;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -31,7 +32,7 @@ public class WriteSimpleTest extends ModuleTestBase {
         System.out.println(file);
 
         XlsxMapper mapper = new XlsxMapper();
-        mapper.enable(XlsxGenerator.Feature.WRITE_NUMBERS_AS_STRINGS);
+        mapper.enable(XlsxGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN);
         CsvSchema schema = mapper.schemaFor(FiveMinuteUser.class).withHeader();
         SequenceWriter sequenceWriter = mapper.writer(schema).writeValues(file);
         sequenceWriter.write(user);
@@ -86,7 +87,7 @@ public class WriteSimpleTest extends ModuleTestBase {
     @Test
     public void testFeature_NumbersAsString() throws IOException {
         XlsxMapper mapper = new XlsxMapper();
-        mapper.enable(XlsxGenerator.Feature.WRITE_NUMBERS_AS_STRINGS);
+        mapper.enable(XlsxGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN);
         CsvSchema schema = mapper.schemaFor(FiveMinuteUser.class).withHeader();
 
         FiveMinuteUser user = new FiveMinuteUser("Silu", "Seppala", false, Gender.MALE, 123,
@@ -98,8 +99,8 @@ public class WriteSimpleTest extends ModuleTestBase {
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         int activeSheetIndex = workbook.getActiveSheetIndex();
         Sheet sheet = workbook.getSheetAt(activeSheetIndex);
-        assertEquals("123", sheet.getRow(1).getCell(5).getStringCellValue());
-        assertEquals(Cell.CELL_TYPE_STRING, sheet.getRow(1).getCell(5).getCellType());
+        assertEquals(123.0, sheet.getRow(1).getCell(5).getNumericCellValue());
+        assertEquals(CellType.NUMERIC, sheet.getRow(1).getCell(5).getCellType());
         assertEquals("1234567890123456789012345678901234567890", sheet.getRow(1).getCell(6).getStringCellValue());
         assertEquals(Cell.CELL_TYPE_STRING, sheet.getRow(1).getCell(6).getCellType());
     }
