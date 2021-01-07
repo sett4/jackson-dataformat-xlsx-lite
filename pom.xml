@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.github.sett4</groupId>
     <artifactId>jackson-dataformat-xlsx-lite</artifactId>
-    <version>2.11.3-SNAPSHOT</version>
+    <version>2.11.3</version>
     <name>Jackson-dataformat-xlsx-lite</name>
     <packaging>jar</packaging>
     <description>Support for writing XLSX-encoded data via Jackson
