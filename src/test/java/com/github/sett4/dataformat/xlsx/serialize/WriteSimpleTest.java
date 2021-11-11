@@ -1,14 +1,12 @@
 package com.github.sett4.dataformat.xlsx.serialize;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.github.sett4.dataformat.xlsx.ModuleTestBase;
 import com.github.sett4.dataformat.xlsx.XlsxGenerator;
 import com.github.sett4.dataformat.xlsx.XlsxMapper;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -17,6 +15,8 @@ import org.junit.Test;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WriteSimpleTest extends ModuleTestBase {
     private final ObjectMapper MAPPER = mapperForXlsx();
@@ -70,6 +70,7 @@ public class WriteSimpleTest extends ModuleTestBase {
         System.out.println(file);
         OutputStream outputStream = new FileOutputStream(file);
         MAPPER.writer(schema).writeValue(outputStream, user);
+        outputStream.close();
 
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         int activeSheetIndex = workbook.getActiveSheetIndex();
@@ -83,6 +84,7 @@ public class WriteSimpleTest extends ModuleTestBase {
         assertEquals("i", sheet.getRow(0).getCell(5).getStringCellValue());
         assertEquals(new BigDecimal("1234567890123456789012345678901234567890").doubleValue(), sheet.getRow(1).getCell(6).getNumericCellValue());
 
+        file.delete();
     }
 
     @Test
@@ -96,6 +98,7 @@ public class WriteSimpleTest extends ModuleTestBase {
         File file = File.createTempFile("jackson-xlsx-test", ".xlsx");
         OutputStream outputStream = new FileOutputStream(file);
         mapper.writer(schema).writeValue(outputStream, user);
+        outputStream.close();
 
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         int activeSheetIndex = workbook.getActiveSheetIndex();
@@ -104,6 +107,45 @@ public class WriteSimpleTest extends ModuleTestBase {
         assertEquals(CellType.NUMERIC, sheet.getRow(1).getCell(5).getCellType());
         assertEquals("1234567890123456789012345678901234567890", sheet.getRow(1).getCell(6).getStringCellValue());
         assertEquals(CellType.STRING, sheet.getRow(1).getCell(6).getCellType());
+
+        file.delete();
+    }
+    
+    @Test
+    public void testWithoutHeader() throws IOException {
+    	XlsxMapper mapper = new XlsxMapper();
+    	CsvSchema.Builder builder = CsvSchema.builder();
+    	builder.setUseHeader(false);
+    	CsvSchema schema = builder.build();
+    	
+    	List<List<Object>> list = new ArrayList<>();
+    	List<Object> row = new ArrayList<>();
+    	row.add("Silu");
+    	row.add("Seppala");
+    	row.add(false);
+    	row.add(Gender.MALE);
+    	row.add(123);
+    	row.add(new byte[]{1, 2, 3, 4, 5});
+    	row.add(new BigDecimal("1234567890123456789012345678901234567890"));
+    	list.add(row);
+    	
+    	File file = File.createTempFile("jackson-xlsx-test", ".xlsx");
+    	
+        OutputStream outputStream = new FileOutputStream(file);
+        mapper.writer(schema).writeValue(outputStream, list);
+        outputStream.close();
+        
+        Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
+        int activeSheetIndex = workbook.getActiveSheetIndex();
+        Sheet sheet = workbook.getSheetAt(activeSheetIndex);
+        assertEquals(CellType.STRING, sheet.getRow(0).getCell(0).getCellType());
+        assertEquals("Silu", sheet.getRow(0).getCell(0).getStringCellValue());
+        assertEquals(CellType.NUMERIC, sheet.getRow(0).getCell(4).getCellType());
+        assertEquals(123.0, sheet.getRow(0).getCell(4).getNumericCellValue());
+        assertEquals(CellType.NUMERIC, sheet.getRow(0).getCell(6).getCellType());
+        assertEquals(new BigDecimal("1234567890123456789012345678901234567890").doubleValue(), sheet.getRow(0).getCell(6).getNumericCellValue());
+    	
+        file.delete();
     }
 
     /*
