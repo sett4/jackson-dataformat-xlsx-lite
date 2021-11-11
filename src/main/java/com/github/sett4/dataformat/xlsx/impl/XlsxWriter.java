@@ -1,5 +1,6 @@
 package com.github.sett4.dataformat.xlsx.impl;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -37,11 +38,11 @@ public class XlsxWriter {
     }
 
     public void write(int columnIndex, String text) {
-        getRow().createCell(columnIndex, CellType.STRING).setCellValue(text);
+        createCell(columnIndex, CellType.STRING).setCellValue(text);
     }
 
     public void write(int columnIndex, boolean state) {
-        getRow().createCell(columnIndex, CellType.BOOLEAN).setCellValue(state);
+        createCell(columnIndex, CellType.BOOLEAN).setCellValue(state);
     }
 
     public void endRow() {
@@ -54,30 +55,44 @@ public class XlsxWriter {
     }
 
     public void writeColumnName(String name, int index) {
-        Row row = getRow();
-        row.createCell(index).setCellValue(name);
+        getRow().createCell(index).setCellValue(name);
     }
 
     public void writeNull(int columnIndex) {
+    	if (columnIndex == _nextColumnToWrite) {
+    		++_nextColumnToWrite;
+    	}
     }
 
     public void write(int columnIndex, float v) {
-        getRow().createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
+        createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
     }
 
     public void write(int columnIndex, double v) {
-        getRow().createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
+        createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
     }
 
     public void write(int columnIndex, int v) {
-        getRow().createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
+        createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
     }
 
     public void write(int columnIndex, long v) {
-        getRow().createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
+        createCell(columnIndex, CellType.NUMERIC).setCellValue(v);
     }
 
     public Object getOutputTarget() {
         return out;
+    }
+    
+    private Cell createCell(int columnIndex, CellType type) {
+    	Cell cell = getRow().createCell(columnIndex, type);
+    	if (columnIndex == _nextColumnToWrite) {
+    		++_nextColumnToWrite;
+    	}
+    	return cell;
+    }
+    
+    public int nextColumnIndex() {
+        return _nextColumnToWrite;
     }
 }

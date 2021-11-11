@@ -1,6 +1,7 @@
 package com.github.sett4.dataformat.xlsx;
 
 import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.io.ContentReference;
 import com.fasterxml.jackson.core.io.IOContext;
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
@@ -104,7 +105,7 @@ public class XlsxFactory
 
     @Override
     public Version version() {
-        return com.github.sett4.xlsx.PackageVersion.VERSION;
+        return com.github.sett4.dataformat.xlsx.PackageVersion.VERSION;
     }
 
     // Yes; CSV is positional
@@ -160,25 +161,25 @@ public class XlsxFactory
 
     @Override
     public XlsxParser createParser(File f) throws IOException {
-        IOContext ctxt = _createContext(f, true);
+    	IOContext ctxt =  _createContext(_createContentReference(f), true);
         return _createParser(_decorate(new FileInputStream(f), ctxt), ctxt);
     }
 
     @Override
     public XlsxParser createParser(URL url) throws IOException {
-        IOContext ctxt = _createContext(url, true);
-        return _createParser(_decorate(_optimizedStreamFromURL(url), ctxt), ctxt);
+    	IOContext ctxt =  _createContext(_createContentReference(url), true);
+    	return _createParser(_decorate(_optimizedStreamFromURL(url), ctxt), ctxt);
     }
 
     @Override
     public XlsxParser createParser(InputStream in) throws IOException {
-        IOContext ctxt = _createContext(in, false);
+    	IOContext ctxt =  _createContext(_createContentReference(in), true);
         return _createParser(_decorate(in, ctxt), ctxt);
     }
 
     @Override
     public XlsxParser createParser(Reader r) throws IOException {
-        IOContext ctxt = _createContext(r, false);
+    	IOContext ctxt =  _createContext(_createContentReference(r), true);
         return _createParser(_decorate(r, ctxt), ctxt);
     }
 
@@ -271,8 +272,8 @@ public class XlsxFactory
      */
 
     @Override
-    protected IOContext _createContext(Object srcRef, boolean resourceManaged) {
-        return new CsvIOContext(_getBufferRecycler(), srcRef, resourceManaged);
+    protected IOContext _createContext(ContentReference contentRef, boolean resourceManaged) {
+        return new CsvIOContext(_getBufferRecycler(), contentRef, resourceManaged);
     }
 
     private XlsxGenerator _createGenerator(IOContext ctxt, OutputStream out) throws IOException {

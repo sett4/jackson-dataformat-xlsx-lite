@@ -153,7 +153,7 @@ public class XlsxGenerator extends GeneratorBase {
 
     @Override
     public boolean canOmitFields() {
-        // Nope: CSV requires at least a placeholder
+        // Nope: XLSX requires at least a placeholder
         return false;
     }
 
@@ -215,7 +215,7 @@ public class XlsxGenerator extends GeneratorBase {
                 }
                 if (sep.isEmpty()) {
                     if (!_schema.hasArrayElementSeparator()) {
-                        _reportError("CSV generator does not support Array values for properties without setting 'arrayElementSeparator' in schema");
+                        _reportError("XLSX generator does not support Array values for properties without setting 'arrayElementSeparator' in schema");
                     }
                     sep = _schema.getArrayElementSeparator();
                 }
@@ -230,7 +230,7 @@ public class XlsxGenerator extends GeneratorBase {
         } else {
             if (!_arraySeparator.isEmpty()) {
                 // also: no nested arrays, yet
-                _reportError("CSV generator does not support nested Array values");
+                _reportError("XSLX generator does not support nested Array values");
             }
         }
         _writeContext = _writeContext.createChildArrayContext();
@@ -648,7 +648,7 @@ public class XlsxGenerator extends GeneratorBase {
     protected final int _columnIndex() {
         int ix = _nextColumnByName;
         if (ix < 0) { // if we had one, remove now
-            throw new IllegalStateException("ix<0");
+        	ix = _writer.nextColumnIndex();
         }
         return ix;
     }
