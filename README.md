@@ -13,19 +13,10 @@ see https://jitpack.io/#sett4/jackson-dataformat-xlsx-lite
 # Usage
 
 ```xml
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
-```
-
-```xml
 	<dependency>
 	    <groupId>com.github.sett4</groupId>
 	    <artifactId>jackson-dataformat-xlsx-lite</artifactId>
-	    <version>2.9.9-1</version>
+	    <version>2.13.0</version>
 	</dependency>
 ```
 
