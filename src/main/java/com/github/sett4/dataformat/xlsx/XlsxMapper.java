@@ -1,7 +1,9 @@
 package com.github.sett4.dataformat.xlsx;
 
+import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.cfg.MapperBuilder;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import com.fasterxml.jackson.databind.util.LRUMap;
@@ -28,6 +30,16 @@ public class XlsxMapper extends ObjectMapper {
      * to construct; this one is for typed schemas
      */
     protected final LRUMap<JavaType, CsvSchema> _typedSchemas;
+
+
+    public static XlsxMapper.Builder builder() {
+        return new XlsxMapper.Builder(new XlsxMapper());
+    }
+
+    public static XlsxMapper.Builder builder(XlsxFactory xlsxFactory) {
+        return new XlsxMapper.Builder(new XlsxMapper(xlsxFactory));
+    }
+
 
     /*
     /**********************************************************************
@@ -404,5 +416,46 @@ public class XlsxMapper extends ObjectMapper {
         }
         // but in general we will just do what we can:
         return CsvSchema.ColumnType.NUMBER_OR_STRING;
+    }
+
+    public static class Builder extends MapperBuilder<XlsxMapper, XlsxMapper.Builder>
+    {
+        public Builder(XlsxMapper m) {
+            super(m);
+        }
+
+        public XlsxMapper.Builder configure(JsonReadFeature f, boolean state)
+        {
+            if (state) {
+                _mapper.enable(f.mappedFeature());
+            } else {
+                _mapper.disable(f.mappedFeature());
+            }
+            return this;
+        }
+
+        public XlsxMapper.Builder enable(XlsxGenerator.Feature... features)  {
+            for (XlsxGenerator.Feature f : features) {
+                _mapper.enable(f);
+            }
+            return this;
+        }
+
+        public XlsxMapper.Builder disable(XlsxGenerator.Feature... features) {
+            for (XlsxGenerator.Feature f : features) {
+                _mapper.disable(f);
+            }
+            return this;
+        }
+
+        public XlsxMapper.Builder configure(XlsxGenerator.Feature f, boolean state)
+        {
+            if (state) {
+                _mapper.enable(f);
+            } else {
+                _mapper.disable(f);
+            }
+            return this;
+        }
     }
 }
