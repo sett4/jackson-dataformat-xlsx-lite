@@ -1,7 +1,6 @@
 package com.github.sett4.dataformat.xlsx;
 
 import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.io.ContentReference;
 import com.fasterxml.jackson.core.io.IOContext;
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
@@ -105,7 +104,7 @@ public class XlsxFactory
 
     @Override
     public Version version() {
-        return com.github.sett4.dataformat.xlsx.PackageVersion.VERSION;
+        return PackageVersion.VERSION;
     }
 
     // Yes; CSV is positional
@@ -207,7 +206,11 @@ public class XlsxFactory
     public CsvParser createParser(char[] data, int offset, int len) throws IOException {
         return (CsvParser) super.createParser(data, offset, len);
     }
-    
+
+    private ContentReference _createContentReference(Object contentAccessor) {
+        return ContentReference.construct(!this.canHandleBinaryNatively(), contentAccessor);
+    }
+
     /*
     /******************************************************
     /* Factory methods: generators
@@ -271,7 +274,6 @@ public class XlsxFactory
     /**********************************************************
      */
 
-    @Override
     protected IOContext _createContext(ContentReference contentRef, boolean resourceManaged) {
         return new CsvIOContext(_getBufferRecycler(), contentRef, resourceManaged);
     }
