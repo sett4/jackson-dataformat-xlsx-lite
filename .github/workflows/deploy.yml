@@ -2,7 +2,7 @@ name: Deploy jackson-dataformat-xlsx-lite
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   publish:
