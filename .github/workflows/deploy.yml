@@ -1,0 +1,27 @@
+name: Deploy jackson-dataformat-xlsx-lite
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk
+          server-id: usbr-component
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Publish Artifacts
+        id: thedeploy
+        run: ./mvnw clean deploy -DMAVEN_URL_SNAPSHOTS=${{ secrets.DEPLOY_URL_SNAPSHOTS }} -DMAVEN_URL_RELEASES=${{ secrets.DEPLOY_URL_RELEASES }}
+        env:
+          MAVEN_USERNAME: ${{ secrets.DEPLOY_USER }}
+          MAVEN_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
