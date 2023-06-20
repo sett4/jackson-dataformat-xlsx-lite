@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.io.IOContext;
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.fasterxml.jackson.dataformat.csv.impl.CsvIOContext;
 
 import java.io.*;
 import java.net.URL;
@@ -273,7 +272,7 @@ public class XlsxFactory
 
     @Override
     protected IOContext _createContext(ContentReference contentRef, boolean resourceManaged) {
-        return new CsvIOContext(_getBufferRecycler(), contentRef, resourceManaged);
+        return new IOContext(_getBufferRecycler(), contentRef, resourceManaged);
     }
 
     private XlsxGenerator _createGenerator(IOContext ctxt, OutputStream out) throws IOException {
