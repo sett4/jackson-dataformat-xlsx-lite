@@ -109,12 +109,13 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>1.6.13</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <stagingProfileId>${nexus.stagingProfileId}</stagingProfileId>
                 </configuration>
             </plugin>
             <plugin>
@@ -146,7 +147,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.6</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -154,10 +155,10 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
-<!--                        <configuration>-->
-<!--                            <keyname>${gpg.keyname}</keyname>-->
+                        <configuration>
+                            <keyname>${gpg.keyname}</keyname>
 <!--                            <passphraseServerId>${gpg.keyname}</passphraseServerId>-->
-<!--                        </configuration>-->
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
